@@ -131,7 +131,7 @@ function mrk_cta( $label = 'Get a Free Quote', $class = 'button button-primary' 
 }
 
 function mrk_meta() {
-	if ( is_admin() ) {
+	if ( is_admin() || defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) || defined( 'AIOSEO_VERSION' ) ) {
 		return;
 	}
 
@@ -142,11 +142,24 @@ function mrk_meta() {
 	if ( ! $description ) {
 		$description = 'Web development, digital services, PLC, Arduino and automation solutions from MRK Digital.';
 	}
+	$description = wp_trim_words( wp_strip_all_tags( $description ), 30, '…' );
+	$title = wp_get_document_title();
+	$url = is_singular() ? get_permalink() : home_url( '/' );
+	$image = is_singular() && has_post_thumbnail() ? get_the_post_thumbnail_url( get_queried_object_id(), 'large' ) : '';
 
-	echo '<meta name="description" content="' . esc_attr( wp_strip_all_tags( $description ) ) . '">' . "\n";
+	echo '<meta name="description" content="' . esc_attr( $description ) . '">' . "\n";
 	echo '<meta property="og:site_name" content="MRK Digital &amp; Online Services Center">' . "\n";
-	echo '<meta property="og:type" content="' . ( is_singular( 'post' ) ? 'article' : 'website' ) . '">' . "\n";
-	echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+	echo '<meta property="og:type" content="' . esc_attr( is_singular( 'post' ) ? 'article' : 'website' ) . '">' . "\n";
+	echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+	echo '<meta property="og:description" content="' . esc_attr( $description ) . '">' . "\n";
+	echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+	echo '<meta name="twitter:card" content="' . esc_attr( $image ? 'summary_large_image' : 'summary' ) . '">' . "\n";
+	echo '<meta name="twitter:title" content="' . esc_attr( $title ) . '">' . "\n";
+	echo '<meta name="twitter:description" content="' . esc_attr( $description ) . '">' . "\n";
+if ( $image ) {
+	echo '<meta property="og:image" content="' . esc_url( $image ) . '">' . "\n";
+	echo '<meta name="twitter:image" content="' . esc_url( $image ) . '">' . "\n";
+}
 }
 add_action( 'wp_head', 'mrk_meta', 2 );
 
@@ -239,11 +252,16 @@ function mrk_handle_quote() {
 	}
 
 	$to = get_theme_mod( 'mrk_contact_email' ) ?: get_option( 'admin_email' );
+	if ( ! is_email( $to ) ) {
+		wp_safe_redirect( add_query_arg( 'quote', 'mail_error', wp_get_referer() ?: home_url( '/contact/' ) ) );
+		exit;
+	}
 	$subject = sprintf( '[MRK Quote] %s — %s', $service ?: 'General enquiry', $name );
 	$body = "Name: $name\nContact: $contact\nEmail: $email\nService: $service\nBudget: $budget\nPreferred contact: $preferred_contact\n\nProject: $description";
+	$headers = $email ? array( 'Reply-To: ' . $email ) : array();
 
-	wp_mail( $to, $subject, $body );
-	wp_safe_redirect( add_query_arg( 'quote', 'sent', wp_get_referer() ?: home_url( '/contact/' ) ) );
+	$sent = wp_mail( $to, $subject, $body, $headers );
+	wp_safe_redirect( add_query_arg( 'quote', $sent ? 'sent' : 'mail_error', wp_get_referer() ?: home_url( '/contact/' ) ) );
 	exit;
 }
 add_action( 'admin_post_nopriv_mrk_quote', 'mrk_handle_quote' );
