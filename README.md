@@ -37,3 +37,7 @@ Use a local WordPress environment, activate the theme, and test changed template
 ## Publishing checklist
 
 Before publishing a service, project or article: check the permalink, title, excerpt/meta description, one visible H1, heading hierarchy, featured-image alt text, internal links, CTA destination, mobile layout and factual accuracy. Create the legal pages from WordPress Pages and add owner-reviewed content before adding them to a live footer menu.
+
+## Phase 2 production QA and content planning
+
+See [`docs/PRODUCTION-QA.md`](docs/PRODUCTION-QA.md) for the non-destructive migration plan, runtime verification limits and Pantheon checklist. See [`docs/CONTENT-ROADMAP.md`](docs/CONTENT-ROADMAP.md) for the service catalogue, verified-project standard and staged article clusters. These documents are deliberately editorial plans: no unverified services, project results, contacts, articles or legal claims are seeded automatically.
