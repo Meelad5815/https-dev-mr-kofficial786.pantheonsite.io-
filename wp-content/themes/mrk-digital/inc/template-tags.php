@@ -40,6 +40,18 @@ function mrk_breadcrumbs() {
 	);
 }
 
+function mrk_quote_notice() {
+	$status = isset( $_GET['quote'] ) ? sanitize_key( wp_unslash( $_GET['quote'] ) ) : '';
+	$messages = array(
+		'sent'       => array( 'success', 'Thank you. Your enquiry has been sent.' ),
+		'invalid'    => array( 'error', 'Please complete the required fields and check the email address.' ),
+		'mail_error' => array( 'error', 'The enquiry could not be delivered right now. Please try again or use the configured WhatsApp contact.' ),
+	);
+	if ( isset( $messages[ $status ] ) ) {
+		printf( '<p class="notice %1$s" role="status">%2$s</p>', esc_attr( $messages[ $status ][0] ), esc_html( $messages[ $status ][1] ) );
+	}
+}
+
 function mrk_quote_form( $service = '' ) {
 	?>
 	<form class="quote-form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
