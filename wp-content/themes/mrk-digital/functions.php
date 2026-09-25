@@ -249,5 +249,5 @@ function mrk_handle_quote() {
 add_action( 'admin_post_nopriv_mrk_quote', 'mrk_handle_quote' );
 add_action( 'admin_post_mrk_quote', 'mrk_handle_quote' );
 
-require get_template_directory() . '/inc/template-tags.php';
-require get_template_directory() . '/inc/content-blueprints.php';
+require_once get_template_directory() . '/inc/template-tags.php';
+require_once get_template_directory() . '/inc/content-blueprints.php';
