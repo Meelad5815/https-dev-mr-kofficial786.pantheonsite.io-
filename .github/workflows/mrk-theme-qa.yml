@@ -1,0 +1,36 @@
+name: MRK Theme QA
+
+on:
+  push:
+    branches: ["main", "fix/**", "qa/**"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  theme-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          coverage: none
+
+      - name: PHP syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find wp-content/themes/mrk-digital -type f -name '*.php' -print0 |
+            xargs -0 -n1 php -l
+
+      - name: Theme static QA
+        run: php tools/qa-theme.php
+
+      - name: Check whitespace errors
+        run: git diff --check
