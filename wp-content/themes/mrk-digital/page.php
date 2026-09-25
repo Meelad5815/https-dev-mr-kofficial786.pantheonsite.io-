@@ -9,6 +9,7 @@ mrk_breadcrumbs();
 			<div class="entry-content"><?php the_content(); ?></div>
 			<?php if ( is_page( 'contact' ) ) : ?>
 				<?php mrk_contact_channels(); ?>
+				<?php mrk_quote_notice(); ?>
 				<?php mrk_quote_form(); ?>
 			<?php endif; ?>
 		<?php endwhile; ?>
