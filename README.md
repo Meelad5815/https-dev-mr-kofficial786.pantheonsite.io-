@@ -41,3 +41,11 @@ Before publishing a service, project or article: check the permalink, title, exc
 ## Phase 2 production QA and content planning
 
 See [`docs/PRODUCTION-QA.md`](docs/PRODUCTION-QA.md) for the non-destructive migration plan, runtime verification limits and Pantheon checklist. See [`docs/CONTENT-ROADMAP.md`](docs/CONTENT-ROADMAP.md) for the service catalogue, verified-project standard and staged article clusters. These documents are deliberately editorial plans: no unverified services, project results, contacts, articles or legal claims are seeded automatically.
+
+## Phase 3 owner-triggered draft setup
+
+After theme activation, an administrator may open **Tools → MRK Content Setup** to create the agreed service catalogue, WordPress categories, taxonomy terms, and the Automatic Water Tank Controller project as **drafts only**. The tool never changes existing content or publishes entries. Review every draft, confirm actual availability and implementation details, add authentic images/alt text, set page-specific SEO fields, and publish manually. See [`docs/SEO-CONTENT-BRIEFS.md`](docs/SEO-CONTENT-BRIEFS.md) and [`docs/LOCAL-SEO-PLAN.md`](docs/LOCAL-SEO-PLAN.md) for the staged content and local SEO plans.
+
+## Phase 4 launch readiness
+
+Read [`docs/LAUNCH-READINESS.md`](docs/LAUNCH-READINESS.md) before activating or publishing production content. It documents the safe Pantheon sequence, the preserved 36-service catalogue difference, owner-review workflow, Search Console checks, analytics measurement-ID integration point, and monetization gate.

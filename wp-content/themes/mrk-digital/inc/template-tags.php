@@ -28,6 +28,7 @@ function mrk_quote_form( $service = '' ) {
 	<form class="quote-form" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="post">
 		<input type="hidden" name="action" value="mrk_quote">
 		<?php wp_nonce_field( 'mrk_quote', 'mrk_quote_nonce' ); ?>
+		<p class="honeypot" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
 		<div class="form-grid">
 			<label><?php esc_html_e( 'Name*', 'mrk-digital' ); ?><input required name="name" autocomplete="name"></label>
 			<label><?php esc_html_e( 'WhatsApp / contact*', 'mrk-digital' ); ?><input required name="contact" autocomplete="tel"></label>
@@ -45,6 +46,19 @@ function mrk_quote_form( $service = '' ) {
 
 function mrk_service_options() {
 	return array( 'Web development', 'App & software', 'Digital services', 'PLC & automation', 'Arduino / ESP32 / IoT', 'IT services' );
+}
+
+function mrk_contact_channels() {
+	$email   = get_theme_mod( 'mrk_contact_email' );
+	$address = get_theme_mod( 'mrk_public_address' );
+	$area    = get_theme_mod( 'mrk_service_area' );
+	if ( ! $email && ! $address && ! $area && ! mrk_whatsapp_url() ) { return; }
+	echo '<section class="contact-details" aria-labelledby="contact-details-heading"><h2 id="contact-details-heading">Contact details</h2>';
+	if ( mrk_whatsapp_url() ) { mrk_cta( 'WhatsApp MRK', 'button button-quiet' ); }
+	if ( $email ) { printf( '<p><strong>Email:</strong> <a href="mailto:%1$s">%2$s</a></p>', esc_attr( antispambot( $email ) ), esc_html( antispambot( $email ) ) ); }
+	if ( $area ) { printf( '<p><strong>Service areas:</strong> %s</p>', esc_html( $area ) ); }
+	if ( $address ) { printf( '<p><strong>Public address:</strong> %s</p>', nl2br( esc_html( $address ) ) ); }
+	echo '</section>';
 }
 
 function mrk_related_content( $post_type, $heading ) {
