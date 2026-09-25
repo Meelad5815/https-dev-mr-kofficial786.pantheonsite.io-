@@ -17,4 +17,3 @@
 	<?php endwhile; ?>
 </main>
 <?php get_footer(); ?>
-<?php get_header(); mrk_breadcrumbs(); ?><main id="content" class="shell section article"><article><?php while(have_posts()):the_post(); ?><header><p class="eyebrow">MRK service</p><h1><?php the_title(); ?></h1><?php if(has_excerpt()): ?><p class="lead"><?php echo esc_html(get_the_excerpt()); ?></p><?php endif; ?><?php mrk_cta('Get a Free Quote'); ?></header><?php if(has_post_thumbnail()) the_post_thumbnail('large',array('class'=>'featured-image')); ?><div class="entry-content"><?php the_content(); ?></div><section class="service-inquiry"><div><p class="eyebrow">Project enquiry</p><h2>Discuss your requirements</h2><p>Share the problem you need solved, relevant systems or platforms, and the outcome you are working toward.</p></div><?php mrk_quote_form(get_the_title()); ?></section><?php endwhile; ?></article></main><?php get_footer(); ?>
