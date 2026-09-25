@@ -1,0 +1,1 @@
+<?php get_header(); mrk_breadcrumbs(); ?><main id="content" class="shell section article"><article><?php while(have_posts()):the_post(); ?><h1><?php the_title(); ?></h1><div class="entry-content"><?php the_content(); ?></div><?php if(is_page('contact')) { mrk_contact_channels(); mrk_quote_form(); } endwhile; ?></article></main><?php get_footer(); ?>
